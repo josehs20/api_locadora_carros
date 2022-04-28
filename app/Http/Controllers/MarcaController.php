@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class MarcaController extends Controller
 {
+
+    public function __construct(Marca $marca)
+    {
+        $this->marca = $marca;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,19 +19,9 @@ class MarcaController extends Controller
      */
     public function index()
     {
-        //
+        $marcas = $this->marca->all();
+        return $marcas;
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -35,51 +30,45 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       // Marca::create($request->all());
+       $marca = $this->marca->create($request->all());
+        return ['msg' => 'Marca Criada Com Sucesso'];
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Marca  $marca
+     * @param  Integer
      * @return \Illuminate\Http\Response
      */
-    public function show(Marca $marca)
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Marca  $marca
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Marca $marca)
-    {
-        //
+        $marca = $this->marca->find($id);
+        return $marca;
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Integer
      * @param  \App\Models\Marca  $marca
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Marca $marca)
+    public function update(Request $request, $id)
     {
-        //
+        $this->marca->find($id)->update($request->all());
+        return  ['msg' => 'Marca Atualizada Com Sucesso'];
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Marca  $marca
+     * @param  Integer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Marca $marca)
+    public function destroy($id)
     {
-        //
+        $this->marca->find($id)->delete();
+        return  ['msg' => 'Marca deletada Com Sucesso'];
     }
 }
