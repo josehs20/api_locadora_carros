@@ -25,7 +25,7 @@ class CreateModelosTable extends Migration
             $table->timestamps();
     
             //foreign key (constraints)
-            $table->foreign('marca_id')->references('id')->on('marcas');
+            $table->foreign('marca_id')->references('id')->on('marcas')->onDelete('cascade');
         });
     }
 
